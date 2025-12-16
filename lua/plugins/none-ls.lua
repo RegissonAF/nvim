@@ -10,8 +10,8 @@ return {
 		null_ls.setup({
 			sources = {
 
-                --python
-                null_ls.builtins.formatting.pyink,
+				--python
+				null_ls.builtins.formatting.pyink,
 
 				--Lua
 				null_ls.builtins.formatting.stylua,

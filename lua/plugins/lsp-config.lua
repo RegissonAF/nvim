@@ -1,45 +1,48 @@
 return {
 
-	{
-		"williamboman/mason.nvim",
-		lazy = false,
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		lazy = false,
-		opts = {
-			auto_install = true,
-		},
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"rust_analyzer",
-                    "ruff"
-				},
-			})
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		lazy = false,
-		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    {
+        "williamboman/mason.nvim",
+        lazy = false,
+        config = function()
+            require("mason").setup()
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        lazy = false,
+        opts = {
+            auto_install = true,
+        },
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = {},
+            })
+        end,
+    },
+    {
+        "neovim/nvim-lspconfig",
+        lazy = false,
+        config = function()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+            -- Set up lua_ls
 
-			lspconfig.rust_analyzer.setup({
-				capabilities = capabilities,
-			})
-		end,
-	},
+            vim.lsp.config("lua_ls", {
+                capabilities = capabilities,
+            })
+            vim.lsp.enable("lua_ls")
+
+            -- Set keymaps
+
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+            vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+
+            -- Set up 'rust_analyzer'
+            vim.lsp.config("rust_analyzer", {
+                capabilities = capabilities,
+            })
+            vim.lsp.enable("rust_analyzer")
+        end,
+    },
 }
