@@ -32,6 +32,14 @@ return {
 				--Rust
 			},
 		})
-		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+		-- stylua formats Lua when it's installed, and lua_ls only when it isn't,
+		-- so the two never reformat the same file one after the other.
+		vim.keymap.set("n", "<leader>gf", function()
+			vim.lsp.buf.format({
+				filter = function(client)
+					return client.name ~= "lua_ls" or vim.fn.executable("stylua") == 0
+				end,
+			})
+		end, {})
 	end,
 }
