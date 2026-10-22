@@ -1,6 +1,6 @@
 return {
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.6', 
+    'nvim-telescope/telescope.nvim', version = '*', -- the latest release; lazy-lock.json holds the exact one
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       local builtin = require("telescope.builtin")
